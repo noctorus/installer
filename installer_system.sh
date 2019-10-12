@@ -108,9 +108,34 @@ fi
 aws --version
 # spark
 
-# hadoop
+version=2.4.4
+hversion=3.2.1
 
+if [ ! -f ~/installs/.spark ]; then
+	
+	if [ ! -f /tmp/spark.tar.gz ]; then
+		wget -O /tmp/spark.tar.gz "https://www-eu.apache.org/dist/spark/spark-$version/spark-$version-bin-hadoop2.7.tgz"
 
+	fi
 
+	# descompress spark
+	tar -xf /tmp/spark.tar.gz --directory /opt
+	mv "spark-$version-bin-hadoop2.7" "spark"
+
+	# hadoop
+
+	if [ ! -f /tmp/hadoop.tar.gz ]; then
+		wget -O /tmp/hadoop.tar.gz "https://www-eu.apache.org/dist/hadoop/common/hadoop-$hversion/hadoop-$hversion.tar.gz"
+	fi
+
+	# descompress hadoop
+	tar -xf /tmp/hadoop.tar.gz --directory /opt
+	mv "hadoop-$hversion" "hadoop"
+
+	cat .bashrc > ~/.bashrc
+	cat .bashrc > /home/noctorus/.bashrc
+	source ~/.bashrc
+
+fi
 
 
