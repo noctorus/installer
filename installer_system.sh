@@ -30,6 +30,32 @@ if [ ! -f ~/installs/.java ]; then
 fi
 java -version
 
+version="2019.2.5"
+
+if [ ! -f ~/installs/.datagrip ]; then
+
+	# 
+	# Download datagrip
+	if [ ! -f /tmp/datagrip.tar.gz ]; then
+	    wget -O /tmp/datagrip.tar.gz "https://download.jetbrains.com/datagrip/datagrip-$version.tar.gz"
+	fi
+
+	# Decompress datagrip
+	tar -xf /tmp/datagrip.tar.gz --directory /opt
+
+	# Get rid of existing symlink that points to now-obsolete version
+	if [ -f /usr/bin/datagrip ]; then
+		rm /usr/bin/datagrip
+	fi
+
+	# Create a symlink. Now you can run datagrip on the command line and
+	# on the first run, it will create a start menu shortcut and such
+	ln -s "/opt/DataGrip-$version/bin/datagrip.sh" /usr/bin/datagrip
+	touch ~/installs/.datagrip
+
+fi
+echo "DataGrip $version"
+
 version="2019.2.3"
 
 if [ ! -f ~/installs/.pycharm ]; then
@@ -135,6 +161,7 @@ if [ ! -f ~/installs/.spark ]; then
 	cat .bashrc > ~/.bashrc
 	cat .bashrc > /home/noctorus/.bashrc
 	source ~/.bashrc
+	touch ~/installs/.spark
 
 fi
 
